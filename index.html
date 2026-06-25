@@ -1,966 +1,754 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeFlow | Visual Development Platform</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>GameHub - 专业游戏资讯门户</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
         }
-        
+        :root {
+            --bg-main: #0f101a;
+            --bg-card: #1a1c2e;
+            --text-white: #f2f2f2;
+            --text-gray: #a0a3b8;
+            --primary: #7b2ffd;
+            --secondary: #00d4ff;
+            --hover-gradient: linear-gradient(90deg, #7b2ffd, #00d4ff);
+        }
         body {
-            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-white);
             line-height: 1.6;
-            color: #333;
-            background-color: #f9fbfd;
         }
-        
-        h1, h2, h3, h4 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            line-height: 1.3;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header & Navigation */
-        header {
-            background-color: #fff;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo-icon {
-            color: #4361ee;
-            font-size: 28px;
-            margin-right: 10px;
-        }
-        
-        .logo-text {
-            font-family: 'Poppins', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            color: #333;
-        }
-        
-        .logo-text span {
-            color: #4361ee;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 30px;
-        }
-        
-        .nav-links a {
+        a {
             text-decoration: none;
-            color: #555;
-            font-weight: 500;
-            transition: color 0.3s;
+            color: inherit;
         }
-        
-        .nav-links a:hover {
-            color: #4361ee;
+        ul {
+            list-style: none;
         }
-        
-        .cta-button {
-            background-color: #4361ee;
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
+        .container {
+            width: 92%;
+            max-width: 1280px;
+            margin: 0 auto;
         }
-        
-        .cta-button:hover {
-            background-color: #3a56d4;
-            transform: translateY(-2px);
+
+        /* 导航栏 */
+        header {
+            background: rgba(18, 20, 36, 0.95);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            border-bottom: 1px solid #272a40;
         }
-        
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: #333;
-            cursor: pointer;
-        }
-        
-        /* Hero Section */
-        .hero {
-            padding: 150px 0 100px;
-            background: linear-gradient(135deg, #f0f4ff 0%, #f9fbfd 100%);
-        }
-        
-        .hero-content {
+        .nav-wrap {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-        }
-        
-        .hero-text {
-            flex: 1;
-            padding-right: 40px;
-        }
-        
-        .hero-text h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #222;
-        }
-        
-        .hero-text h1 span {
-            color: #4361ee;
-        }
-        
-        .hero-text p {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 30px;
-            max-width: 600px;
-        }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .secondary-button {
-            background-color: white;
-            color: #4361ee;
-            border: 2px solid #4361ee;
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .secondary-button:hover {
-            background-color: #f0f4ff;
-        }
-        
-        .hero-image {
-            flex: 1;
-            text-align: center;
-        }
-        
-        .hero-image img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 20px 40px rgba(67, 97, 238, 0.15);
-        }
-        
-        /* Features Section */
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .section-title h2 {
-            font-size: 36px;
-            color: #222;
-            margin-bottom: 15px;
-        }
-        
-        .section-title p {
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .features {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-        
-        .feature-card {
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .feature-icon {
-            background-color: #eef2ff;
-            color: #4361ee;
-            width: 70px;
+            align-items: center;
             height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            font-size: 28px;
         }
-        
-        .feature-card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .feature-card p {
-            color: #666;
-        }
-        
-        /* Benefits Section */
-        .benefits {
-            padding: 100px 0;
-            background-color: #f0f4ff;
-        }
-        
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        
-        .benefit-item {
-            text-align: center;
-            padding: 30px 20px;
-        }
-        
-        .benefit-icon {
-            color: #4361ee;
-            font-size: 40px;
-            margin-bottom: 20px;
-        }
-        
-        .benefit-item h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .benefit-item p {
-            color: #666;
-        }
-        
-        /* Testimonials */
-        .testimonials {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .testimonial-slider {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-        }
-        
-        .testimonial {
-            background: #f9fbfd;
-            padding: 40px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .testimonial-text {
-            font-size: 18px;
-            font-style: italic;
-            margin-bottom: 30px;
-            color: #555;
-        }
-        
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .author-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #ddd;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #4361ee;
-            font-size: 24px;
-        }
-        
-        .author-info h4 {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-        
-        .author-info p {
-            color: #777;
-            font-size: 14px;
-        }
-        
-        /* Pricing Section */
-        .pricing {
-            padding: 100px 0;
-            background-color: #f9fbfd;
-        }
-        
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-        
-        .pricing-card {
-            background: white;
-            border-radius: 10px;
-            padding: 40px 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        
-        .pricing-card.featured {
-            border-top: 5px solid #4361ee;
-            transform: scale(1.05);
-            position: relative;
-        }
-        
-        .featured-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #4361ee;
-            color: white;
-            padding: 5px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        
-        .pricing-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .pricing-card.featured:hover {
-            transform: scale(1.05) translateY(-10px);
-        }
-        
-        .plan-name {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        
-        .plan-price {
-            font-size: 48px;
+        .logo {
+            font-size: 26px;
             font-weight: 700;
-            color: #4361ee;
-            margin-bottom: 20px;
+            background: var(--hover-gradient);
+            -webkit-background-clip: text;
+            color: transparent;
         }
-        
-        .plan-price span {
-            font-size: 16px;
-            color: #777;
+        .nav-list {
+            display: flex;
+            gap: 32px;
         }
-        
-        .plan-features {
-            list-style: none;
-            margin-bottom: 30px;
+        .nav-list li a {
+            color: var(--text-gray);
+            transition: 0.3s;
+            font-size: 15px;
         }
-        
-        .plan-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-            color: #555;
+        .nav-list li a:hover {
+            color: var(--secondary);
         }
-        
-        .plan-features li:last-child {
-            border-bottom: none;
+        .nav-list li a.active {
+            color: var(--secondary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 6px;
         }
-        
-        /* CTA Section */
-        .cta-section {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #4361ee 0%, #3a56d4 100%);
-            text-align: center;
-            color: white;
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #272a40;
+            border-radius: 30px;
+            padding: 7px 16px;
         }
-        
-        .cta-section h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
+        .search-box input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            width: 160px;
         }
-        
-        .cta-section p {
-            font-size: 18px;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
+        .search-box button {
+            border: none;
+            background: transparent;
+            color: var(--text-gray);
+            cursor: pointer;
         }
-        
-        .cta-section .cta-button {
-            background-color: white;
-            color: #4361ee;
-            font-size: 16px;
-            padding: 15px 40px;
+        .menu-btn {
+            display: none;
+            font-size: 24px;
         }
-        
-        .cta-section .cta-button:hover {
-            background-color: #f0f4ff;
+
+        /* 轮播横幅 */
+        .banner {
+            height: 460px;
+            overflow: hidden;
+            position: relative;
+            margin-top: 10px;
+            border-radius: 12px;
         }
-        
-        /* Footer */
-        footer {
-            background-color: #222;
-            color: #ccc;
-            padding: 70px 0 20px;
+        .slide-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease;
         }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 50px;
+        .slide-item.active {
+            opacity: 1;
         }
-        
-        .footer-column h3 {
-            font-size: 20px;
-            color: white;
-            margin-bottom: 25px;
+        .slide-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
-        
-        .footer-links {
-            list-style: none;
+        .slide-mask {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            padding: 50px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.85));
         }
-        
-        .footer-links li {
+        .slide-tag {
+            display: inline-block;
+            background: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
             margin-bottom: 12px;
         }
-        
-        .footer-links a {
-            color: #aaa;
-            text-decoration: none;
-            transition: color 0.3s;
+        .slide-title {
+            font-size: 36px;
+            margin-bottom: 10px;
         }
-        
-        .footer-links a:hover {
-            color: #4361ee;
+        .slide-desc {
+            color: var(--text-gray);
+            max-width: 600px;
         }
-        
+        .slide-btn {
+            margin-top: 16px;
+            display: inline-block;
+            padding: 10px 24px;
+            background: var(--hover-gradient);
+            border-radius: 6px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .slide-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        .slide-dots {
+            position: absolute;
+            bottom: 20px;
+            right: 50px;
+            display: flex;
+            gap: 10px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+        }
+        .dot.active {
+            background: var(--secondary);
+        }
+
+        /* 主体内容布局 */
+        .main-wrap {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #272a40;
+        }
+        .section-title h2 {
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title h2::before {
+            content: "";
+            width: 4px;
+            height: 20px;
+            background: var(--secondary);
+            margin-right: 10px;
+        }
+        .more-link {
+            color: var(--secondary);
+            font-size: 14px;
+        }
+
+        /* 热门游戏卡片 */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        .game-card {
+            background: var(--bg-card);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+        .game-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 24px rgba(123, 47, 253, 0.2);
+        }
+        .game-img-box {
+            height: 180px;
+            overflow: hidden;
+        }
+        .game-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.4s;
+        }
+        .game-card:hover .game-img {
+            transform: scale(1.08);
+        }
+        .game-info {
+            padding: 14px;
+        }
+        .game-type {
+            font-size: 12px;
+            color: var(--secondary);
+            margin-bottom: 6px;
+        }
+        .game-name {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        .game-desc {
+            font-size: 13px;
+            color: var(--text-gray);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* 资讯列表 */
+        .news-list li {
+            display: flex;
+            gap: 16px;
+            background: var(--bg-card);
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 14px;
+            transition: 0.3s;
+        }
+        .news-list li:hover {
+            background: #22253b;
+        }
+        .news-img {
+            width: 140px;
+            height: 90px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+        .news-text h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .news-meta {
+            font-size: 12px;
+            color: var(--text-gray);
+            margin-top: 10px;
+            display: flex;
+            gap: 16px;
+        }
+
+        /* 侧边栏 */
+        .sidebar .widget {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .widget-title {
+            font-size: 17px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #272a40;
+        }
+        .rank-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 14px;
+            gap: 12px;
+        }
+        .rank-num {
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            line-height: 24px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .rank-num.top1 { background: #ff4757; }
+        .rank-num.top2 { background: #ff7f50; }
+        .rank-num.top3 { background: #ffda79; color: #000; }
+        .rank-num.other { background: #333750; }
+        .rank-text {
+            flex: 1;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .tag-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .tag-item {
+            padding: 5px 12px;
+            background: #272a40;
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-gray);
+            transition: 0.3s;
+        }
+        .tag-item:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        /* 页脚 */
+        footer {
+            background: #0b0c16;
+            padding: 50px 0 20px;
+            border-top: 1px solid #272a40;
+        }
+        .footer-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .footer-col h3 {
+            font-size: 17px;
+            margin-bottom: 18px;
+        }
+        .footer-col li {
+            margin-bottom: 10px;
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+        .footer-col li a:hover {
+            color: var(--secondary);
+        }
         .copyright {
             text-align: center;
+            color: var(--text-gray);
+            font-size: 13px;
             padding-top: 20px;
-            border-top: 1px solid #444;
-            font-size: 14px;
-            color: #888;
+            border-top: 1px solid #272a40;
         }
-        
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .hero-content {
-                flex-direction: column;
+
+        /* 响应式适配 */
+        @media(max-width:992px) {
+            .main-wrap {
+                grid-template-columns: 1fr;
             }
-            
-            .hero-text {
-                padding-right: 0;
-                margin-bottom: 50px;
-                text-align: center;
+            .game-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-            
-            .hero-text p {
-                margin: 0 auto 30px;
-            }
-            
-            .pricing-card.featured {
-                transform: none;
-            }
-            
-            .pricing-card.featured:hover {
-                transform: translateY(-10px);
+            .footer-row {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
-        
-        @media (max-width: 768px) {
-            .nav-links {
+        @media(max-width:768px) {
+            .nav-list, .search-box {
                 display: none;
             }
-            
-            .mobile-menu-btn {
+            .menu-btn {
                 display: block;
             }
-            
-            .hero-text h1 {
-                font-size: 36px;
+            .banner {
+                height: 300px;
             }
-            
-            .section-title h2 {
-                font-size: 30px;
+            .slide-title {
+                font-size: 24px;
             }
-            
-            .hero-buttons {
+            .game-grid {
+                grid-template-columns: 1fr;
+            }
+            .news-list li {
                 flex-direction: column;
-                align-items: center;
             }
-            
-            .hero-buttons button {
+            .news-img {
                 width: 100%;
-                max-width: 300px;
+                height: 160px;
             }
-        }
-        
-        @media (max-width: 576px) {
-            .hero {
-                padding: 130px 0 80px;
-            }
-            
-            .features, .benefits, .testimonials, .pricing, .cta-section {
-                padding: 70px 0;
-            }
-            
-            .feature-card, .testimonial {
-                padding: 25px;
-            }
-            
-            .plan-price {
-                font-size: 36px;
+            .footer-row {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header & Navigation -->
+    <!-- 导航 -->
     <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <div class="logo-icon"><i class="fas fa-bezier-curve"></i></div>
-                    <div class="logo-text">Code<span>Flow</span></div>
-                </div>
-                
-                <ul class="nav-links">
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#benefits">Benefits</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#">Resources</a></li>
-                </ul>
-                
-                <button class="cta-button">Start Free Trial</button>
-                <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
-            </nav>
+        <div class="container nav-wrap">
+            <a href="#" class="logo">GameHub</a>
+            <ul class="nav-list">
+                <li><a href="#" class="active">首页</a></li>
+                <li><a href="#">游戏库</a></li>
+                <li><a href="#">资讯新闻</a></li>
+                <li><a href="#">新游评测</a></li>
+                <li><a href="#">攻略教程</a></li>
+                <li><a href="#">社区论坛</a></li>
+            </ul>
+            <div class="search-box">
+                <input type="text" placeholder="搜索游戏/资讯...">
+                <button>🔍</button>
+            </div>
+            <div class="menu-btn">☰</div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Build Apps Faster With <span>Visual Development</span></h1>
-                    <p>CodeFlow empowers teams to create enterprise-grade applications with minimal coding. Drag, drop, and connect components to build powerful web and mobile apps in record time.</p>
-                    <div class="hero-buttons">
-                        <button class="cta-button">Start Building Free</button>
-                        <button class="secondary-button">Watch Demo</button>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="CodeFlow Platform Interface">
+    <div class="container">
+        <!-- 轮播横幅 -->
+        <section class="banner">
+            <div class="slide-item active">
+                <img src="https://picsum.photos/id/237/1920/800" alt="游戏大图" class="slide-bg">
+                <div class="slide-mask">
+                    <span class="slide-tag">年度大作</span>
+                    <h2 class="slide-title">赛博朋克：深空边境 全新DLC上线</h2>
+                    <p class="slide-desc">全新开放世界地图、载具系统与主线剧情更新，限时半价特惠同步开启，一起来探索星际都市！</p>
+                    <a href="#" class="slide-btn">查看详情</a>
                 </div>
             </div>
-        </div>
-    </section>
+            <div class="slide-item">
+                <img src="https://picsum.photos/id/1039/1920/800" alt="游戏大图" class="slide-bg">
+                <div class="slide-mask">
+                    <span class="slide-tag">热门网游</span>
+                    <h2 class="slide-title">武侠江湖新版本：跨服战场开启</h2>
+                    <p class="slide-desc">千人同屏PVP、全新门派武学、限时外观活动，海量福利登录即领。</p>
+                    <a href="#" class="slide-btn">查看详情</a>
+                </div>
+            </div>
+            <div class="slide-item">
+                <img src="https://picsum.photos/id/1060/1920/800" alt="游戏大图" class="slide-bg">
+                <div class="slide-mask">
+                    <span class="slide-tag">独立佳作</span>
+                    <h2 class="slide-title">像素风生存建造游戏正式发售</h2>
+                    <p class="slide-desc">融合建造、战斗、经营的独立新作，首发折扣持续一周，支持中文。</p>
+                    <a href="#" class="slide-btn">查看详情</a>
+                </div>
+            </div>
+            <div class="slide-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </section>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Powerful Features for Rapid Development</h2>
-                <p>CodeFlow provides all the tools you need to build, deploy, and scale applications without writing extensive code.</p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-th-large"></i>
+        <!-- 主内容区 -->
+        <div class="main-wrap">
+            <main class="main-left">
+                <!-- 热门游戏 -->
+                <section class="hot-game">
+                    <div class="section-title">
+                        <h2>热门游戏推荐</h2>
+                        <a href="#" class="more-link">更多游戏 ></a>
                     </div>
-                    <h3>Visual Builder</h3>
-                    <p>Drag and drop UI components to design responsive interfaces. Connect data sources with simple point-and-click actions.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3>Database Integration</h3>
-                    <p>Connect to any data source with built-in connectors. Automatically generate CRUD operations without writing SQL.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Cross-Platform</h3>
-                    <p>Build once, deploy everywhere. Generate applications for web, iOS, and Android from a single visual design.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Extensible with Code</h3>
-                    <p>Add custom functionality with JavaScript when needed. Our platform doesn't limit your creativity or complexity.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Enterprise Security</h3>
-                    <p>Built-in authentication, authorization, and data encryption. SOC2 compliant with enterprise-grade security features.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h3>One-Click Deployment</h3>
-                    <p>Deploy to cloud or on-premises with a single click. Automatic scaling and monitoring included.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Benefits Section -->
-    <section class="benefits" id="benefits">
-        <div class="container">
-            <div class="section-title">
-                <h2>Why Choose CodeFlow?</h2>
-                <p>Join thousands of companies accelerating their digital transformation with low-code development.</p>
-            </div>
-            
-            <div class="benefits-grid">
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>10x Faster Development</h3>
-                    <p>Build applications in days instead of months with visual development tools.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </div>
-                    <h3>Reduce Costs by 70%</h3>
-                    <p>Lower development and maintenance costs with fewer resources required.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>Citizen Developers</h3>
-                    <p>Enable business users to build solutions with minimal IT assistance.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Scale Effortlessly</h3>
-                    <p>From prototype to enterprise-scale applications with the same platform.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <div class="section-title">
-                <h2>Trusted by Industry Leaders</h2>
-                <p>See what our customers have to say about their experience with CodeFlow.</p>
-            </div>
-            
-            <div class="testimonial-slider">
-                <div class="testimonial">
-                    <div class="testimonial-text">
-                        "CodeFlow transformed how we deliver solutions to our business units. What used to take 6 months now takes 3 weeks. Our development team can focus on complex problems while business teams build their own solutions."
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">SC</div>
-                        <div class="author-info">
-                            <h4>Sarah Chen</h4>
-                            <p>CTO, TechGrowth Inc.</p>
+                    <div class="game-grid">
+                        <div class="game-card">
+                            <div class="game-img-box">
+                                <img src="https://picsum.photos/id/1/400/220" class="game-img">
+                            </div>
+                            <div class="game-info">
+                                <div class="game-type">开放世界 / RPG</div>
+                                <h3 class="game-name">星际远征2</h3>
+                                <p class="game-desc">星际探索冒险游戏，自由驾驶飞船穿梭各大星球，招募伙伴组建星际小队。</p>
+                            </div>
+                        </div>
+                        <div class="game-card">
+                            <div class="game-img-box">
+                                <img src="https://picsum.photos/id/10/400/220" class="game-img">
+                            </div>
+                            <div class="game-info">
+                                <div class="game-type">武侠 / 多人在线</div>
+                                <h3 class="game-name">青衫剑途</h3>
+                                <p class="game-desc">高画质国风武侠，自由轻功、门派争斗、情缘系统，打造真实江湖。</p>
+                            </div>
+                        </div>
+                        <div class="game-card">
+                            <div class="game-img-box">
+                                <img src="https://picsum.photos/id/28/400/220" class="game-img">
+                            </div>
+                            <div class="game-info">
+                                <div class="game-type">生存 / 建造</div>
+                                <h3 class="game-name">荒岛纪元</h3>
+                                <p class="game-desc">孤岛求生题材，收集资源建造基地，对抗野兽与恶劣天气。</p>
+                            </div>
+                        </div>
+                        <div class="game-card">
+                            <div class="game-img-box">
+                                <img src="https://picsum.photos/id/36/400/220" class="game-img">
+                            </div>
+                            <div class="game-info">
+                                <div class="game-type">竞技射击</div>
+                                <h3 class="game-name">极速战区</h3>
+                                <p class="game-desc">快节奏百人射击，多种战术地图与武器改装系统，每日赛事不停。</p>
+                            </div>
+                        </div>
+                        <div class="game-card">
+                            <div class="game-img-box">
+                                <img src="https://picsum.photos/id/42/400/220" class="game-img">
+                            </div>
+                            <div class="game-info">
+                                <div class="game-type">单机剧情</div>
+                                <h3 class="game-name">黄昏纪事</h3>
+                                <p class="game-desc">电影式叙事解谜游戏，多结局分支选择，沉浸式悬疑故事。</p>
+                            </div>
+                        </div>
+                        <div class="game-card">
+                            <div class="game-img-box">
+                                <img src="https://picsum.photos/id/60/400/220" class="game-img">
+                            </div>
+                            <div class="game-info">
+                                <div class="game-type">模拟经营</div>
+                                <h3 class="game-name">幻想乐园</h3>
+                                <p class="game-desc">打造专属奇幻游乐园，自定义设施、吸引游客，解锁海量装饰。</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                </section>
 
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-title">
-                <h2>Simple, Transparent Pricing</h2>
-                <p>Choose the plan that fits your needs. All plans include core features with no hidden fees.</p>
-            </div>
-            
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3 class="plan-name">Starter</h3>
-                    <div class="plan-price">$29<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li>Up to 5 users</li>
-                        <li>10 GB storage</li>
-                        <li>Basic components</li>
-                        <li>Community support</li>
-                        <li>1 production app</li>
+                <!-- 游戏资讯 -->
+                <section class="news">
+                    <div class="section-title">
+                        <h2>最新游戏资讯</h2>
+                        <a href="#" class="more-link">全部资讯 ></a>
+                    </div>
+                    <ul class="news-list">
+                        <li>
+                            <img src="https://picsum.photos/id/120/140/90" class="news-img">
+                            <div class="news-text">
+                                <h3>2026 E3游戏展定档！多款3A大作将首次公开实机演示</h3>
+                                <p style="font-size:13px;color:var(--text-gray)">全球顶级厂商参展，包含多款未公布续作与全新IP，展会线上同步直播。</p>
+                                <div class="news-meta">
+                                    <span>2026-06-25</span>
+                                    <span>行业资讯</span>
+                                    <span>阅读 1.2w</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="https://picsum.photos/id/130/140/90" class="news-img">
+                            <div class="news-text">
+                                <h3>知名单机开发商新作曝光：开放世界魔法题材预计年末上线</h3>
+                                <p style="font-size:13px;color:var(--text-gray)">官方泄露概念图，动态天气与魔法交互系统成为核心亮点。</p>
+                                <div class="news-meta">
+                                    <span>2026-06-24</span>
+                                    <span>新游爆料</span>
+                                    <span>阅读 8620</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="https://picsum.photos/id/140/140/90" class="news-img">
+                            <div class="news-text">
+                                <h3>网游新版本更新预告：全新团本、专属坐骑与赛季通行证</h3>
+                                <p style="font-size:13px;color:var(--text-gray)">7月1日正式更新，完成活动可免费领取限定绝版外观。</p>
+                                <div class="news-meta">
+                                    <span>2026-06-23</span>
+                                    <span>游戏更新</span>
+                                    <span>阅读 7300</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="https://picsum.photos/id/150/140/90" class="news-img">
+                            <div class="news-text">
+                                <h3>夏日游戏特惠开启：上千款游戏低至2折，限时48小时</h3>
+                                <p style="font-size:13px;color:var(--text-gray)">3A大作、独立游戏合集同步折扣，多款新史低价不容错过。</p>
+                                <div class="news-meta">
+                                    <span>2026-06-22</span>
+                                    <span>优惠活动</span>
+                                    <span>阅读 1.5w</span>
+                                </div>
+                            </div>
+                        </li>
                     </ul>
-                    <button class="secondary-button">Get Started</button>
-                </div>
-                
-                <div class="pricing-card featured">
-                    <div class="featured-badge">Most Popular</div>
-                    <h3 class="plan-name">Professional</h3>
-                    <div class="plan-price">$89<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li>Up to 25 users</li>
-                        <li>100 GB storage</li>
-                        <li>All components</li>
-                        <li>Priority support</li>
-                        <li>10 production apps</li>
-                        <li>Custom branding</li>
-                    </ul>
-                    <button class="cta-button">Try Free for 14 Days</button>
-                </div>
-                
-                <div class="pricing-card">
-                    <h3 class="plan-name">Enterprise</h3>
-                    <div class="plan-price">Custom</div>
-                    <ul class="plan-features">
-                        <li>Unlimited users</li>
-                        <li>Unlimited storage</li>
-                        <li>All features included</li>
-                        <li>24/7 dedicated support</li>
-                        <li>Unlimited apps</li>
-                        <li>On-premises option</li>
-                    </ul>
-                    <button class="secondary-button">Contact Sales</button>
-                </div>
-            </div>
-        </div>
-    </section>
+                </section>
+            </main>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Start Building Today</h2>
-            <p>Join over 10,000 companies that use CodeFlow to accelerate their application development. No credit card required for the free trial.</p>
-            <button class="cta-button">Get Started for Free</button>
+            <!-- 侧边栏 -->
+            <aside class="sidebar">
+                <div class="widget">
+                    <h3 class="widget-title">热门游戏排行榜</h3>
+                    <ul class="rank-list">
+                        <li>
+                            <span class="rank-num top1">1</span>
+                            <span class="rank-text">赛博朋克：深空边境</span>
+                        </li>
+                        <li>
+                            <span class="rank-num top2">2</span>
+                            <span class="rank-text">青衫剑途</span>
+                        </li>
+                        <li>
+                            <span class="rank-num top3">3</span>
+                            <span class="rank-text">极速战区</span>
+                        </li>
+                        <li>
+                            <span class="rank-num other">4</span>
+                            <span class="rank-text">星际远征2</span>
+                        </li>
+                        <li>
+                            <span class="rank-num other">5</span>
+                            <span class="rank-text">荒岛纪元</span>
+                        </li>
+                        <li>
+                            <span class="rank-num other">6</span>
+                            <span class="rank-text">黄昏纪事</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="widget">
+                    <h3 class="widget-title">热门分类标签</h3>
+                    <div class="tag-wrap">
+                        <a href="#" class="tag-item">开放世界</a>
+                        <a href="#" class="tag-item">武侠</a>
+                        <a href="#" class="tag-item">射击竞技</a>
+                        <a href="#" class="tag-item">生存建造</a>
+                        <a href="#" class="tag-item">单机剧情</a>
+                        <a href="#" class="tag-item">模拟经营</a>
+                        <a href="#" class="tag-item">独立游戏</a>
+                        <a href="#" class="tag-item">3A大作</a>
+                        <a href="#" class="tag-item">手游推荐</a>
+                        <a href="#" class="tag-item">游戏折扣</a>
+                    </div>
+                </div>
+                <div class="widget">
+                    <h3 class="widget-title">关注我们</h3>
+                    <p style="color:var(--text-gray);font-size:14px;">每日推送新游资讯、评测与优惠活动，不错过任何游戏热点！</p>
+                </div>
+            </aside>
         </div>
-    </section>
+    </div>
 
-    <!-- Footer -->
+    <!-- 页脚 -->
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <div class="logo">
-                        <div class="logo-icon"><i class="fas fa-bezier-curve"></i></div>
-                        <div class="logo-text">Code<span>Flow</span></div>
-                    </div>
-                    <p style="margin-top: 20px; color: #aaa;">The leading visual development platform for building enterprise applications with minimal coding.</p>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Product</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">Use Cases</a></li>
-                        <li><a href="#">Integrations</a></li>
-                        <li><a href="#">Roadmap</a></li>
+            <div class="footer-row">
+                <div class="footer-col">
+                    <h3>关于GameHub</h3>
+                    <ul>
+                        <li><a href="#">网站介绍</a></li>
+                        <li><a href="#">联系我们</a></li>
+                        <li><a href="#">商务合作</a></li>
+                        <li><a href="#">招贤纳士</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Tutorials</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Community</a></li>
-                        <li><a href="#">Support</a></li>
+                <div class="footer-col">
+                    <h3>内容分类</h3>
+                    <ul>
+                        <li><a href="#">游戏库</a></li>
+                        <li><a href="#">资讯新闻</a></li>
+                        <li><a href="#">新游评测</a></li>
+                        <li><a href="#">攻略教程</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-column">
-                    <h3>Company</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
+                <div class="footer-col">
+                    <h3>社区服务</h3>
+                    <ul>
+                        <li><a href="#">玩家论坛</a></li>
+                        <li><a href="#">投稿通道</a></li>
+                        <li><a href="#">问题反馈</a></li>
+                        <li><a href="#">隐私政策</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>订阅推送</h3>
+                    <ul>
+                        <li>每日游戏资讯速递</li>
+                        <li>新游上线第一时间通知</li>
+                        <li>游戏折扣优惠提醒</li>
                     </ul>
                 </div>
             </div>
-            
             <div class="copyright">
-                <p>&copy; 2023 CodeFlow. All rights reserved.</p>
+                © 2026 GameHub 游戏资讯门户 版权所有 | 本网站仅供演示学习使用
             </div>
         </div>
     </footer>
 
+    <!-- 轮播JS -->
     <script>
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-            
-            // Adjust for mobile
-            if (window.innerWidth <= 768) {
-                if (navLinks.style.display === 'flex') {
-                    navLinks.style.flexDirection = 'column';
-                    navLinks.style.position = 'absolute';
-                    navLinks.style.top = '80px';
-                    navLinks.style.left = '0';
-                    navLinks.style.width = '100%';
-                    navLinks.style.backgroundColor = 'white';
-                    navLinks.style.padding = '20px';
-                    navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
-                    
-                    const navItems = document.querySelectorAll('.nav-links li');
-                    navItems.forEach(item => {
-                        item.style.margin = '10px 0';
-                    });
-                }
-            }
-        });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    if(window.innerWidth <= 768) {
-                        document.querySelector('.nav-links').style.display = 'none';
-                    }
-                }
-            });
-        });
-        
-        // Simple testimonial slider
-        const testimonials = [
-            {
-                text: "CodeFlow transformed how we deliver solutions to our business units. What used to take 6 months now takes 3 weeks. Our development team can focus on complex problems while business teams build their own solutions.",
-                name: "Sarah Chen",
-                position: "CTO, TechGrowth Inc.",
-                initials: "SC"
-            },
-            {
-                text: "We reduced our app development time by 80% using CodeFlow. The visual interface made it easy for our analysts to build data dashboards without waiting for IT resources.",
-                name: "Marcus Johnson",
-                position: "Director of Operations, DataCorp",
-                initials: "MJ"
-            },
-            {
-                text: "As a non-technical founder, CodeFlow allowed me to build our MVP in just 2 months. I could test ideas quickly and iterate based on user feedback without deep coding knowledge.",
-                name: "Lisa Wang",
-                position: "Founder, StartupLabs",
-                initials: "LW"
-            }
-        ];
-        
-        let currentTestimonial = 0;
-        const testimonialElement = document.querySelector('.testimonial');
-        
-        function rotateTestimonial() {
-            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-            updateTestimonial();
+        const slides = document.querySelectorAll('.slide-item');
+        const dots = document.querySelectorAll('.dot');
+        let index = 0;
+        let timer;
+
+        function switchSlide(i) {
+            slides.forEach(s => s.classList.remove('active'));
+            dots.forEach(d => d.classList.remove('active'));
+            slides[i].classList.add('active');
+            dots[i].classList.add('active');
+            index = i;
         }
-        
-        function updateTestimonial() {
-            const testimonial = testimonials[currentTestimonial];
-            testimonialElement.innerHTML = `
-                <div class="testimonial-text">"${testimonial.text}"</div>
-                <div class="testimonial-author">
-                    <div class="author-avatar">${testimonial.initials}</div>
-                    <div class="author-info">
-                        <h4>${testimonial.name}</h4>
-                        <p>${testimonial.position}</p>
-                    </div>
-                </div>
-            `;
+
+        function autoPlay() {
+            timer = setInterval(() => {
+                index = (index + 1) % slides.length;
+                switchSlide(index);
+            }, 5000);
         }
-        
-        // Auto-rotate testimonials every 5 seconds
-        setInterval(rotateTestimonial, 5000);
-        
-        // CTA button interactions
-        document.querySelectorAll('.cta-button').forEach(button => {
-            button.addEventListener('click', function() {
-                alert('Thank you for your interest in CodeFlow! You would be redirected to the signup page in a real implementation.');
-            });
-        });
-        
-        // Pricing card interactions
-        document.querySelectorAll('.pricing-card button').forEach(button => {
-            button.addEventListener('click', function() {
-                const planName = this.closest('.pricing-card').querySelector('.plan-name').textContent;
-                alert(`You selected the ${planName} plan. In a real implementation, you would be redirected to the checkout process.`);
-            });
-        });
+        autoPlay();
+
+        // 点击切换圆点
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                clearInterval(timer);
+                switchSlide(i);
+                autoPlay();
+            })
+        })
     </script>
 </body>
 </html>
